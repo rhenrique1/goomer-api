@@ -7,29 +7,34 @@ import { Routes } from "./routes/routes";
 
 createConnection().then(async connection => {
 
-    // create express app
-    const app = express();
-    app.use(bodyParser.json());
+	// create express app
+	const app = express();
+	app.use(bodyParser.json());
 
-    // register express routes from defined application routes
-    Routes.forEach(route => {
-        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller as any))[route.action](req, res, next);
-            if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
+	const cors = require('cors');
+	app.use(
+		cors({
+			origin: 'http://localhost:4200'
+		})
+	);
 
-            } else if (result !== null && result !== undefined) {
-                res.json(result);
-            }
-        });
-    });
+	// register express routes from defined application routes
+	Routes.forEach(route => {
+		(app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
+			const result = (new (route.controller as any))[route.action](req, res, next);
+			if (result instanceof Promise) {
+				//erro aqui
+				result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
 
-    // setup express app here
-    // ...
+			} else if (result !== null && result !== undefined) {
+				res.json(result);
+			}
+		});
+	});
 
-    // start express server
-    app.listen(3000);
+	// start express server
+	app.listen(3000);
 
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
+	console.log("Express server has started on port 3000.");
 
 }).catch(error => console.log(error));

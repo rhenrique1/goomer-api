@@ -32,18 +32,10 @@ export class ProductController {
 	}
 
 	async update(request: Request, response: Response, next: NextFunction) {
-		const product = plainToClass(ProductDto, request.body);
-		var res = await this.productServices.update(product);
-
-		if ((res instanceof Product)) {
-			console.log('entrou no if');
-			let productToUpdate = await this.productRepository.findOne(res.id);
-			await this.productRepository.update(productToUpdate.id, res);
-			return response.status(200).send(res);
-		} else {
-			console.log('entrou no else');
-			console.log(res);
-			return response.status(400).send(res);
+		const product = await this.productServices.update(request);
+		if (product instanceof ProductDto) {
+			return response.status(200).json({ msg: 'Product updated' });
 		}
+		return response.status(404).json({ msg: 'Product not found' });
 	}
 }

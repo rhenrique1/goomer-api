@@ -1,9 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Restaurant } from "./Restaurant";
-
 @Entity()
 export class Product {
-
+  
   @PrimaryGeneratedColumn()
   id: number;
 

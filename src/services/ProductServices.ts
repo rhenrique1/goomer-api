@@ -1,23 +1,22 @@
 import { validate } from "class-validator";
-import { ProductDto } from "../DTOs/ProductDto";
+import { getRepository } from "typeorm";
+import { Request, Response } from "express";
 import { Product } from "../entity/Product";
-
+import { ProductDto } from "../DTOs/ProductDto";
 export class ProductServices {
 
-  public async update(product: ProductDto): Promise<Product | any> {
-    await validate(product, { skipMissingProperties: true }).then(errors => {
-      // errors is an array of validation errors
+  private productRepository = getRepository(Product);
+
+  public async update(request: Request): Promise<Product> {
+    const p = new ProductDto(request.body);
+
+    validate(p).then((errors) => {
       if (errors.length > 0) {
-        let errorTexts = [];
-        for (const errorItem of errors) {
-          errorTexts = errorTexts.concat(errorItem.constraints);
-        }
-        console.log(errorTexts);
-        return errorTexts;
-      } else {
-        // pass 'product' object to repository/service
-        return product;
+        return errors.map(v => v.constraints);
       }
     });
+
+    const product = await this.productRepository.save(p);
+    return product;
   }
 }
