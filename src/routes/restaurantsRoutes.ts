@@ -25,4 +25,4 @@ export const RestaurantsRoutes = [{
 	route: "/Restaurants",
 	controller: RestaurantController,
 	action: "update"
-}];
+},];

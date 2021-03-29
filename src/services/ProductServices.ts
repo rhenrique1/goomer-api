@@ -1,6 +1,6 @@
 import { validate } from "class-validator";
 import { getRepository } from "typeorm";
-import { Request, Response } from "express";
+import { Request } from "express";
 import { Product } from "../entity/Product";
 import { ProductDto } from "../DTOs/ProductDto";
 export class ProductServices {
@@ -18,5 +18,11 @@ export class ProductServices {
 
     const product = await this.productRepository.save(p);
     return product;
+  }
+
+  public async getProductsByRestaurantId(restaurantId: string) {
+    return await this.productRepository.find({
+      where: { restaurantId: restaurantId },
+    });
   }
 }

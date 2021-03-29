@@ -25,4 +25,9 @@ export const ProductsRoutes = [{
 	route: "/Products",
 	controller: ProductController,
 	action: "update"
+}, {
+	method: "get",
+	route: "/restaurant/products/:restaurantId",
+	controller: ProductController,
+	action: "getProductsByRestaurantId"
 }];

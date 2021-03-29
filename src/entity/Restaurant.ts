@@ -1,7 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, JoinTable, OneToMany} from "typeorm";
-import { Product } from "./Product";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity({name: 'Restaurant'})
+@Entity({ name: 'Restaurant' })
 export class Restaurant {
 
   @PrimaryGeneratedColumn()
@@ -19,5 +18,4 @@ export class Restaurant {
   @Column()
   openingHours: string;
 
-  @OneToMany(type => Product, product => product.restaurant) products: Product[];
 }

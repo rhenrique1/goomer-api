@@ -1,4 +1,4 @@
-import { IsDecimal, IsInt, IsString } from "class-validator";
+import { IsInt, IsString } from "class-validator";
 
 interface Restaurant {
   id: number;

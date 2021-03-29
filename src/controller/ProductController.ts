@@ -1,9 +1,7 @@
 import { getRepository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Product } from "../entity/Product";
-import { plainToClass } from "class-transformer";
 import { ProductDto } from '../DTOs/ProductDto';
-import { isArray, validate } from "class-validator";
 import { ProductServices } from "../services/ProductServices";
 export class ProductController {
 
@@ -37,5 +35,9 @@ export class ProductController {
 			return response.status(200).json({ msg: 'Product updated' });
 		}
 		return response.status(404).json({ msg: 'Product not found' });
+	}
+
+	async getProductsByRestaurantId(request: Request, response: Response, next: NextFunction) {
+		return this.productServices.getProductsByRestaurantId(request.params.restaurantId);
 	}
 }
