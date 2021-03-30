@@ -25,4 +25,9 @@ export const RestaurantsRoutes = [{
 	route: "/Restaurants",
 	controller: RestaurantController,
 	action: "update"
-},];
+}, {
+	method: "get",
+	route: "/Restaurants/name/",
+	controller: RestaurantController,
+	action: "getByNameFilter"
+}];

@@ -36,4 +36,8 @@ export class RestaurantController {
     }
     return response.status(404).json({ msg: 'Restaurant not found' });
   }
+
+  async getByNameFilter(request: Request, response: Response, next: NextFunction) {
+    return this.restaurantServices.getByNameLike(request.params.nameLike);
+  }
 }

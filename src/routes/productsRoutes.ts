@@ -30,4 +30,9 @@ export const ProductsRoutes = [{
 	route: "/restaurant/products/:restaurantId",
 	controller: ProductController,
 	action: "getProductsByRestaurantId"
+}, {
+	method: "get",
+	route: "/Products/name/:param",
+	controller: ProductController,
+	action: "getByNameFilter"
 }];

@@ -1,5 +1,5 @@
 import { validate } from "class-validator";
-import { getRepository } from "typeorm";
+import { getRepository, Like } from "typeorm";
 import { Request } from "express";
 import { Product } from "../entity/Product";
 import { ProductDto } from "../DTOs/ProductDto";
@@ -23,6 +23,13 @@ export class ProductServices {
   public async getProductsByRestaurantId(restaurantId: string) {
     return await this.productRepository.find({
       where: { restaurantId: restaurantId },
+    });
+  }
+
+  public async getByNameLike(request: Request) {
+    const paramObject = JSON.parse(request.params.param);
+    return await this.productRepository.find({
+      where: { restaurantId: paramObject.restaurantId, name: Like(`%${paramObject.nameLike}%`) },
     });
   }
 }

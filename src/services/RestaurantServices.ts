@@ -1,5 +1,5 @@
 import { validate } from "class-validator";
-import { getRepository } from "typeorm";
+import { getRepository, Like } from "typeorm";
 import { Request, Response } from "express";
 import { Restaurant } from "../entity/Restaurant";
 import { RestaurantDto } from "../DTOs/RestaurantDto";
@@ -21,5 +21,9 @@ export class RestaurantServices {
     return restaurant;
   }
 
-
+  public async getByNameLike(name: string) {
+    return await this.restaurantRepository.find({
+      name: Like(`%${name}%`)
+    });
+  }
 }

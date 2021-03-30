@@ -40,4 +40,8 @@ export class ProductController {
 	async getProductsByRestaurantId(request: Request, response: Response, next: NextFunction) {
 		return this.productServices.getProductsByRestaurantId(request.params.restaurantId);
 	}
+
+	async getByNameFilter(request: Request, response: Response, next: NextFunction) {
+		return this.productServices.getByNameLike(request);
+	}
 }
