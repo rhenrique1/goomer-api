@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { OpeningHours } from "./OpeningHours";
 
 @Entity({ name: 'Restaurant' })
 export class Restaurant {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
@@ -15,7 +16,7 @@ export class Restaurant {
   @Column()
   address: string;
 
-  @Column()
-  openingHours: string;
+  @OneToMany(type => OpeningHours, openingHours => openingHours.restaurant)
+  openingHours: OpeningHours[];
 
 }

@@ -5,7 +5,6 @@ interface Restaurant {
   name: string;
   photo: string;
   address: string;
-  openingHours: string;
 }
 export class RestaurantDto {
 
@@ -14,7 +13,6 @@ export class RestaurantDto {
     this.photo = restaurant.photo;
     this.name = restaurant.name;
     this.address = restaurant.address;
-    this.openingHours = restaurant.openingHours;
   }
 
   @IsInt()
@@ -28,7 +26,4 @@ export class RestaurantDto {
 
   @IsString()
   address: string;
-
-  @IsString()
-  openingHours: string;
 }

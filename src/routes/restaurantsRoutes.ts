@@ -14,7 +14,7 @@ export const RestaurantsRoutes = [{
 	method: "post",
 	route: "/Restaurants",
 	controller: RestaurantController,
-	action: "save"
+	action: "insertOrUpdate"
 }, {
 	method: "delete",
 	route: "/Restaurants/:id",
@@ -24,10 +24,10 @@ export const RestaurantsRoutes = [{
 	method: "put",
 	route: "/Restaurants",
 	controller: RestaurantController,
-	action: "update"
+	action: "insertOrUpdate"
 }, {
 	method: "get",
-	route: "/Restaurants/name/",
+	route: "/Restaurants/name/:param",
 	controller: RestaurantController,
 	action: "getByNameFilter"
 }];
