@@ -13,11 +13,11 @@ export class RestaurantController {
   }
 
   async all(request: Request, response: Response, next: NextFunction) {
-    return this.restaurantRepository.find({ relations: ['openingHours'] });
+    return this.restaurantRepository.find({ relations: ['openingHours', 'products'] });
   }
 
   async one(request: Request, response: Response, next: NextFunction) {
-    return this.restaurantRepository.findOne(request.params.id, { relations: ['openingHours'] });
+    return this.restaurantRepository.findOne(request.params.id, { relations: ['openingHours', 'products'] });
 
   }
 

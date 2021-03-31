@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { OpeningHours } from "./OpeningHours";
+import { Product } from "./Product";
 
 @Entity({ name: 'Restaurant' })
 export class Restaurant {
@@ -19,4 +20,6 @@ export class Restaurant {
   @OneToMany(type => OpeningHours, openingHours => openingHours.restaurant)
   openingHours: OpeningHours[];
 
+  @OneToMany(type => Product, product => product.restaurant)
+  products: Product[];
 }

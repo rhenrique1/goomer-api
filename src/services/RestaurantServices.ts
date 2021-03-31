@@ -2,35 +2,49 @@ import { getRepository } from "typeorm";
 import { Request } from "express";
 import { Restaurant } from "../entity/Restaurant";
 import { OpeningHours } from "../entity/OpeningHours";
+import { Product } from "../entity/Product";
 
 export class RestaurantServices {
 
   private restaurantRepository = getRepository(Restaurant);
-  private openinghoursRepository = getRepository(OpeningHours);
+  private openingHoursRepository = getRepository(OpeningHours);
+  private productRepository = getRepository(Product);
 
   public async insertOrUpdate(request: Request) {
     const r = request.body;
 
-    const r2 = new Restaurant();
-    r2.id = r.id;
-    r2.address = r.address;
-    r2.name = r.name;
-    r2.photo = r.photo;
+    const restaurant = new Restaurant();
+    restaurant.id = r.id;
+    restaurant.address = r.address;
+    restaurant.name = r.name;
+    restaurant.photo = r.photo;
 
-    const restaurant = await this.restaurantRepository.save(r2);
+    const newRestaurant = await this.restaurantRepository.save(restaurant);
 
-    if (restaurant) {
+    if (newRestaurant) {
       let openingHours: OpeningHours[] = [];
+      let products: Product[] = [];
 
-      r.openingHours.forEach(element => {
+      r.openingHours.forEach((element: OpeningHours) => {
         openingHours.push(element);
       });
 
-      openingHours.forEach(async element => {
-        const newOpeningHours = this.openinghoursRepository.create(element);
-        newOpeningHours.restaurant = restaurant;
-        await this.openinghoursRepository.save(newOpeningHours);
+      r.products.forEach((element: Product) => {
+        products.push(element);
       });
+
+      openingHours.forEach(async element => {
+        const newOpeningHours = this.openingHoursRepository.create(element);
+        newOpeningHours.restaurant = newRestaurant;
+        await this.openingHoursRepository.save(newOpeningHours);
+      });
+
+      products.forEach(async element => {
+        const newProducts = this.productRepository.create(element);
+        newProducts.restaurant = newRestaurant;
+        await this.productRepository.save(newProducts);
+      });
+
       return true;
     }
 

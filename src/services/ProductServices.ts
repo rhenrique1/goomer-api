@@ -28,8 +28,10 @@ export class ProductServices {
 
   public async getByNameLike(request: Request) {
     const paramObject = JSON.parse(request.params.param);
-    return await this.productRepository.find({
-      where: { restaurantId: paramObject.restaurantId, name: Like(`%${paramObject.nameLike}%`) },
-    });
+    return await this.productRepository.createQueryBuilder('product')
+      .innerJoinAndSelect('product.restaurant', 'restaurant')
+      .where(`product.name LIKE ('%${paramObject.nameLike}%')`)
+      .getMany();
+    // find({ where: { restaurantId: paramObject.restaurantId, name: Like(`%${paramObject.nameLike}%`) },});
   }
 }
